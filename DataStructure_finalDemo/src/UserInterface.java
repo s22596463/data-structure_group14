@@ -6,6 +6,8 @@ import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -17,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.JTextPane;
 
 public class UserInterface {
 
@@ -26,6 +30,7 @@ public class UserInterface {
 	private JLabel lblKeyword;
 	private JLabel lblWeight;
 	private JLabel lblImage;
+	private JTextPane textPane;
 
 	/**
 	 * Launch the application.
@@ -54,6 +59,8 @@ public class UserInterface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		//介面設計
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 863, 574);
@@ -81,36 +88,48 @@ public class UserInterface {
 		btnAdd.setBackground(new Color(135, 206, 250));
 		btnAdd.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		
-		
+		//控制button按下的動作
+		btnEnter.addActionListener(new buttonListenerEnter());
+		btnAdd.addActionListener(new buttonListenerAdd());
+
+		//新增背景圖案
 		lblImage = new JLabel();
 		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
 		Image image = new ImageIcon(this.getClass().getResource("candidate3.jpg")).getImage();
 		lblImage.setIcon(new ImageIcon(image));
 		
-		//lblImage = new JLabel("New label");
-		//Image image = new ImageIcon(this.getClass().getResource("candidate.jpg")).getImage();
-		//lblImage.setIcon(new ImageIcon(image));
-		
+		textPane = new JTextPane();
+		textPane.setFont(new Font("微軟正黑體", Font.PLAIN, 20));
+		textPane.show(false);
+
+		//系統自動生成的
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(154)
-							.addComponent(btnAdd)
-							.addGap(18)
-							.addComponent(btnEnter))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(btnAdd)
+									.addGap(18)
+									.addComponent(btnEnter)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(86)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblKeyword)
+										.addComponent(lblWeight))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(textField_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+										.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))))
+							.addGap(135))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(86)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblKeyword)
-								.addComponent(lblWeight))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(textField_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-								.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))))
-					.addGap(135)
+							.addContainerGap()
+							.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)))
 					.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 379, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -124,16 +143,35 @@ public class UserInterface {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblWeight))
-					.addGap(41)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnEnter)
-						.addComponent(btnAdd))
-					.addGap(664))
+					.addGap(29)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnAdd)
+						.addComponent(btnEnter))
+					.addGap(36)
+					.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+					.addGap(74))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(122)
 					.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(467, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
+	
+	//控制button按下的動作的內部class
+	class buttonListenerEnter implements ActionListener{
+		  public void actionPerformed(ActionEvent e){
+		   System.exit(0);
+		  }
+		 }
+	
+	class buttonListenerAdd implements ActionListener{
+		  public void actionPerformed(ActionEvent e){
+			  textPane.show(true);
+			  String showtext = textPane.getText() + textField.getText()+","+textField_1.getText() +  "  /  " ;
+			  textPane.setText(showtext);
+			  
+			  
+		  }
+		 }
 }
