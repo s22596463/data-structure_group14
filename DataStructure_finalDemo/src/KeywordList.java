@@ -4,9 +4,10 @@ public class KeywordList {
 
 	ArrayList<Keyword> list = new ArrayList();
 	
-	public KeywordList() {
+	public KeywordList() { 
 		// TODO Auto-generated constructor stub
 		list = new ArrayList<Keyword>();
+		
 	}
 
 
@@ -16,3 +17,4 @@ public class KeywordList {
 		list.add(k);
 	}
 }
+ 
