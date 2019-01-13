@@ -16,7 +16,6 @@ public class Viewcontrol {
 	   Keywordlist.addtolist(keyword);
 	 }
 	 
-	 //´ú¸Õ¥Î
 	 public KeywordList get() {
 		 return Keywordlist;
 	 }
