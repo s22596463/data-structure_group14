@@ -11,43 +11,52 @@ public class KeywordCounter {
 	private String urlstr;
  	private String content;
  	
-	public KeywordCounter(String urlstr) {
+	public KeywordCounter() {
 		// TODO Auto-generated constructor stub
-		this.urlstr = urlstr;
 	}
-	private String fetchContent() throws IOException{
+
+	public String fetchContent() throws IOException {
 		URL url = new URL(this.urlstr);
+		String retVal = "";
 		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		
-		String retval = " ";
+		InputStreamReader in = new InputStreamReader(conn.getInputStream(),"UTF8");
+		BufferedReader bf = new BufferedReader(in);
 		String line = null;
-		while((line=br.readLine())!=null) {
-			retval = retval + line + "\n";
+		while((line = bf.readLine()) != null){
+			retVal += line + "\n";
 		}
-		
-		return retval;
-	}	
-	
-	public int countKeyword(String keyword) throws IOException{
-		if(content == null) {
-		   content = fetchContent();
-		}
-		content = content.toUpperCase();
-		keyword = keyword.toUpperCase();
-		
-		//to do: indexOf(keyword)
-		int count = 0;
-		int from = 0;
-	
-		while(content.indexOf(keyword) != -1) {
-			count++;
-			from = content.indexOf(keyword)+keyword.length();
-			content = content.substring(from,content.length());
-		}	
-		return count;
+		return retVal;
 	}
+	
+	public int countKeyword(Keyword k) throws IOException{
+		
+			 if(content == null) {
+		     content = fetchContent();
+		   }
+		   content = content.toUpperCase();
+		   String keywordstr = k.getName();
+		   keywordstr = keywordstr.toUpperCase();
+		
+		    //to do: indexOf(keyword)
+		    int count = 0;
+		    int from = 0;
+	
+		    while(content.indexOf(keywordstr) != -1) {
+			      count++;
+			      from = content.indexOf(keywordstr) + keywordstr.length();
+			      content = content.substring(from,content.length());
+		    }return count;
+	}
+	
+	public void countEveryKeyword(KeywordList keywordlist) throws IOException {
+		
+		for(int i=0 ; i>keywordlist.getSize() ; i++) {
+			Keyword k = keywordlist.getKeyword(i);
+			int count = countKeyword(k);
+			k.setCount(count);
+		}
+	}
+	
 
 
 }

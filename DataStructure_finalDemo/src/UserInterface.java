@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -21,6 +22,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.DropMode;
 
 public class UserInterface {
 
@@ -32,6 +34,8 @@ public class UserInterface {
 	private JLabel lblImage;
 	private JTextPane textPane;
 	private JLabel lblNewLabel;
+	private JTextPane outcome;
+	Viewcontrol viewcontrol;
 
 	/**
 	 * Launch the application.
@@ -105,6 +109,9 @@ public class UserInterface {
 		
 		lblNewLabel = new JLabel("*Your Keywords and weights\uFF1A");
 		lblNewLabel.setFont(new Font("Yu Gothic Medium", Font.PLAIN, 20));
+		
+		outcome = new JTextPane();
+		outcome.setFont(new Font("微軟正黑體", Font.PLAIN, 20));
 
 		//系統自動生成的
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -113,25 +120,33 @@ public class UserInterface {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(76)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-								.addComponent(btnAdd)
-								.addGap(18)
-								.addComponent(btnEnter))
-							.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(lblWeight, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(lblKeyword, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addGap(18)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(textField, Alignment.TRAILING)
-									.addComponent(textField_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))))
-						.addComponent(textPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNewLabel)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(63)
-					.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 414, Short.MAX_VALUE))
+							.addComponent(btnAdd)
+							.addGap(18)
+							.addComponent(btnEnter))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblWeight, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblKeyword, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(textField, Alignment.TRAILING)
+								.addComponent(textField_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addGap(10)
+							.addComponent(textPane, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+							.addGap(11)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(63)
+							.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 414, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(outcome, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)
+							.addGap(27))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -151,11 +166,14 @@ public class UserInterface {
 					.addGap(30)
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
+					.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
 					.addGap(50))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(203)
-					.addComponent(lblImage, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(outcome, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 372, GroupLayout.PREFERRED_SIZE)
+					.addGap(0, 0, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
@@ -163,7 +181,16 @@ public class UserInterface {
 	//控制button按下的動作的內部class
 	class buttonListenerEnter implements ActionListener{
 		  public void actionPerformed(ActionEvent e){
-		   System.exit(0);
+			  Facade facade = new Facade();
+				try {
+					String s = facade.execute();
+					outcome.setText(s);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//outcome.setText("a");		  
+		   //System.exit(0);
 		  }
 		 }
 	
@@ -173,11 +200,10 @@ public class UserInterface {
 			  textPane.show(true);
 			  String showtext = textPane.getText() + textField.getText()+","+textField_1.getText() +  "  /  " ;
 			  textPane.setText(showtext);
-			  
 			  //寫進arraylist裡面
-			  Viewcontrol viewcontrol = new Viewcontrol();
-			  viewcontrol.catchInput();
-			  
+			  String name = textField.getText();
+			  int weight = Integer.parseInt(textField_1.getText());
+			  viewcontrol.catchInput(name,weight);
 		  }
 		 }
 }
