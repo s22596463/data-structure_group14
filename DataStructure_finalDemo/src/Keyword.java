@@ -8,33 +8,33 @@ public class Keyword {
 
 	public Keyword(String n, int w) {
 		// TODO Auto-generated constructor stub
-		name = n;
-		weight = w;
-		count = 0;
+		this.name = n;
+		this.weight = w;
+		this.count = 0;
 	}
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	public int getWeight() {
-		return weight;
+		return this.weight;
 	}
 	
 	public int getCount() {
-		return count;
+		return this.count;
 	}
 
 	public void setName(String n) {
-		name = n;
+		this.name = n;
 	}
 
 	public void setWeight(int w) {
-		weight = w;
+		this.weight = w;
 	}
 	
 	public void setCount(int c) {
-		count = c;
+		this.count = c;
 	}
 	
 	

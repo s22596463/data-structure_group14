@@ -15,11 +15,11 @@ public class KeywordList {
 	}
 	
 	public Keyword getKeyword(int i) {
-		return list.get(i);
+		return this.list.get(i);
 	}
 	
 	public int getSize() {
-		return list.size();
+		return this.list.size();
 	}
 }
  

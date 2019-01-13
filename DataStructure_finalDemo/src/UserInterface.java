@@ -35,7 +35,7 @@ public class UserInterface {
 	private JTextPane textPane;
 	private JLabel lblNewLabel;
 	private JTextPane outcome;
-	Viewcontrol viewcontrol;
+	Viewcontrol vc = new Viewcontrol();
 
 	/**
 	 * Launch the application.
@@ -181,18 +181,19 @@ public class UserInterface {
 	//控制button按下的動作的內部class
 	class buttonListenerEnter implements ActionListener{
 		  public void actionPerformed(ActionEvent e){
-			  Facade facade = new Facade();
-				try {
-					String s = facade.execute();
-					outcome.setText(s);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//outcome.setText("a");		  
+			//outcome.setText("a");
+			Facade facade = new Facade();
+			try {
+				facade.execute(vc.get());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			outcome.setText(facade.showOutcome());
+					  
 		   //System.exit(0);
 		  }
-		 }
+	 }
 	
 	class buttonListenerAdd implements ActionListener{
 		  public void actionPerformed(ActionEvent e){
@@ -203,7 +204,7 @@ public class UserInterface {
 			  //寫進arraylist裡面
 			  String name = textField.getText();
 			  int weight = Integer.parseInt(textField_1.getText());
-			  viewcontrol.catchInput(name,weight);
+			  vc.catchInput(name,weight);
 		  }
 		 }
 }

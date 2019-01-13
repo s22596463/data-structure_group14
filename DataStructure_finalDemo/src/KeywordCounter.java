@@ -6,16 +6,18 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class KeywordCounter {
+public class KeywordCounter{
 	
-	private String urlstr;
- 	private String content;
- 	
-	public KeywordCounter() {
+	String urlstr;
+ 	String content;
+
+	public KeywordCounter(WebPage w) {
 		// TODO Auto-generated constructor stub
+		this.urlstr = w.getUrlstr();
 	}
 
 	public String fetchContent() throws IOException {
+		
 		URL url = new URL(this.urlstr);
 		String retVal = "";
 		URLConnection conn = url.openConnection();
@@ -30,30 +32,33 @@ public class KeywordCounter {
 	
 	public int countKeyword(Keyword k) throws IOException{
 		
-			 if(content == null) {
-		     content = fetchContent();
+		   if(content == null) {
+		      content = fetchContent();
 		   }
 		   content = content.toUpperCase();
 		   String keywordstr = k.getName();
 		   keywordstr = keywordstr.toUpperCase();
 		
 		    //to do: indexOf(keyword)
-		    int count = 0;
+		    int c = 0;
 		    int from = 0;
 	
 		    while(content.indexOf(keywordstr) != -1) {
-			      count++;
+			      c++;
 			      from = content.indexOf(keywordstr) + keywordstr.length();
 			      content = content.substring(from,content.length());
-		    }return count;
+		    }
+		    return c;
 	}
 	
-	public void countEveryKeyword(KeywordList keywordlist) throws IOException {
-		
-		for(int i=0 ; i>keywordlist.getSize() ; i++) {
-			Keyword k = keywordlist.getKeyword(i);
-			int count = countKeyword(k);
-			k.setCount(count);
+	public void countEveryKeyword(KeywordList kl) { 
+		for(int i=0 ; i<kl.getSize() ; i++) {
+			try {
+				kl.getKeyword(i).setCount(countKeyword(kl.getKeyword(i)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

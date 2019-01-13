@@ -2,24 +2,33 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Facade extends UserInterface{
+public class Facade {
 	
-	KeywordList userlist = viewcontrol.getInput();
-    WebPage p1 = new WebPage("三立","https://www.setn.com/Klist.aspx?ProjectID=5301&PageType=6");
+	String outcome1;
+	WebPage p1 = new WebPage("三立","https://www.setn.com/Klist.aspx?ProjectID=5301&PageType=6");
     
+	public Facade() {
+		
+	} 
     
-	public String execute() throws IOException {
-	    p1.countEveryKeyword(userlist);
-	    //System.out.println(p1.calculate(userlist));
-	    //System.out.println(userlist.getKeyword(0));
-	    String outcome1 = ""+p1.calculate(userlist);
-	    return outcome1;
+	public void execute(KeywordList kl) throws IOException {
+		
+		KeywordCounter kc = new KeywordCounter(this.p1);
+		kc.countEveryKeyword(kl);
+	    p1.calculate(kl); 
+	}
+	
+	public String showOutcome() {
+		return p1.getScore();
+	}
+	
+
 	}
 	
 	
 	
 
-}   
+
 
 		
 
