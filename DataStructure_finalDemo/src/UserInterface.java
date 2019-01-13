@@ -182,6 +182,7 @@ public class UserInterface {
 	class buttonListenerEnter implements ActionListener{
 		  public void actionPerformed(ActionEvent e){
 			//outcome.setText("a");
+			outcome.show(true);
 			Facade facade = new Facade();
 			try {
 				facade.execute(vc.get());
@@ -189,7 +190,8 @@ public class UserInterface {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			outcome.setText(facade.showOutcome());
+			outcome.setText("三立: "+facade.showOutcome1()+"\nTVBS: "+facade.showOutcome2()+"\n民視: "+facade.showOutcome3()+"\n聯合: "+facade.showOutcome4());
+			
 					  
 		   //System.exit(0);
 		  }

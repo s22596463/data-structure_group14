@@ -17,7 +17,7 @@ public class Test {
 		KeywordCounter kc = new KeywordCounter(p1);
 		kc.countEveryKeyword(vw.get());
 		p1.calculate(vw.get());*/
-		System.out.println(facade.showOutcome());
+		//System.out.println(facade.showOutcome());
 		
 		
 		/*KeywordList kl = new KeywordList();
